@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JJrShopping — Skincare Finds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dew-bg-1: #f6efe9;
+    --dew-bg-2: #eee0d8;
+    --ink: #2c2521;
+    --ink-soft: #6b5f57;
+    --berry: #8a3b4a;
+    --berry-soft: #c98b93;
+    --sage: #5c7a68;
+    --card-bg: rgba(255, 255, 255, 0.55);
+    --card-border: rgba(255, 255, 255, 0.9);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Work Sans', sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at 20% 0%, rgba(255,255,255,0.9), transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(200,150,150,0.25), transparent 50%),
+      linear-gradient(160deg, var(--dew-bg-1), var(--dew-bg-2));
+    display: flex;
+    justify-content: center;
+    padding: 56px 20px 80px;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--berry-soft), var(--sage));
+    position: relative;
+    box-shadow: 0 8px 24px rgba(138, 59, 74, 0.25);
+  }
+  .avatar::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    width: 14px;
+    height: 14px;
+    background: rgba(255,255,255,0.75);
+    border-radius: 50%;
+    filter: blur(1px);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+  }
+
+  .bio {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 11px;
+    color: var(--sage);
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;
+  }
+
+  .card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    backdrop-filter: blur(6px);
+    text-decoration: none;
+    color: var(--ink);
+    box-shadow: 0 4px 18px rgba(90, 60, 50, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(90, 60, 50, 0.12);
+    background: rgba(255,255,255,0.75);
+  }
+  .card:active { transform: translateY(0); }
+
+  .card-drop {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50% 50% 50% 4px;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-drop span {
+    transform: rotate(-45deg);
+    font-size: 15px;
+  }
+
+  .card-text { flex: 1; min-width: 0; }
+
+  .card-title {
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0 0 2px;
+  }
+
+  .card-sub {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  .arrow {
+    color: var(--berry-soft);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .disclosure {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    padding: 0 12px;
+  }
+
+  .footer {
+    margin-top: 34px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.7;
+  }
+
+  .card[data-tone="1"] .card-drop { background: linear-gradient(135deg, #e7c3c9, #c98b93); }
+  .card[data-tone="2"] .card-drop { background: linear-gradient(135deg, #cddbd0, #5c7a68); }
+  .card[data-tone="3"] .card-drop { background: linear-gradient(135deg, #f0d9b5, #cf9f5e); }
+  .card[data-tone="4"] .card-drop { background: linear-gradient(135deg, #d9c9e0, #8a6b9e); }
+
+  .category-emoji {
+    font-size: 22px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="page">
+    <a class="back-link" href="index.html">← All categories</a>
+    <div class="header">
+      <div class="avatar" aria-hidden="true"></div>
+      <h1>Skincare Finds</h1>
+      <p class="bio">Amazon skincare finds worth adding to your routine. New picks every week.</p>
+    </div>
+
+    <p class="eyebrow">This week's finds</p>
+
+    <a class="card" data-tone="1" href="https://amzn.to/3T6TgEQ" target="_blank" rel="noopener">
+      <div class="card-drop"><span>1</span></div>
+      <div class="card-text">
+        <p class="card-title">Medicube Zero Pore Pad 2.0</p>
+        <p class="card-sub">#1 bestseller · pore &amp; texture care</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="2" href="https://amzn.to/4fhmVTa" target="_blank" rel="noopener">
+      <div class="card-drop"><span>2</span></div>
+      <div class="card-text">
+        <p class="card-title">Hero Cosmetics Mighty Patch</p>
+        <p class="card-sub">the original acne patch, 36 ct</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="3" href="https://amzn.to/4wkHllt" target="_blank" rel="noopener">
+      <div class="card-drop"><span>3</span></div>
+      <div class="card-text">
+        <p class="card-title">Biodance Bio-Collagen Mask</p>
+        <p class="card-sub">overnight hydrogel, 4-pack</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="4" href="https://amzn.to/44Vagkd" target="_blank" rel="noopener">
+      <div class="card-drop"><span>4</span></div>
+      <div class="card-text">
+        <p class="card-title">The Ordinary Glycolic Toner</p>
+        <p class="card-sub">7% exfoliating toning solution</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <p class="eyebrow" style="margin-top:34px;">Medicube viral best sellers</p>
+
+    <a class="card" data-tone="1" href="https://amzn.to/4f9Cv4q" target="_blank" rel="noopener">
+      <div class="card-drop"><span>1</span></div>
+      <div class="card-text">
+        <p class="card-title">PDRN Pink Peptide Serum</p>
+        <p class="card-sub">brightening &amp; firming</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="2" href="https://amzn.to/4yCayKn" target="_blank" rel="noopener">
+      <div class="card-drop"><span>2</span></div>
+      <div class="card-text">
+        <p class="card-title">Zero Exosome Shot Serum</p>
+        <p class="card-sub">Amazon's Choice · pore care</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="3" href="https://amzn.to/3T4KR4R" target="_blank" rel="noopener">
+      <div class="card-drop"><span>3</span></div>
+      <div class="card-text">
+        <p class="card-title">Age R Booster Pro</p>
+        <p class="card-sub">at-home glow device</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="4" href="https://amzn.to/4wRspLw" target="_blank" rel="noopener">
+      <div class="card-drop"><span>4</span></div>
+      <div class="card-text">
+        <p class="card-title">Hypochlorous Acid Peel Mask</p>
+        <p class="card-sub">pore &amp; blackhead care</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <p class="eyebrow" style="margin-top:34px;">High-rated skincare on sale</p>
+
+    <a class="card" data-tone="1" href="https://amzn.to/4wTN0Pp" target="_blank" rel="noopener">
+      <div class="card-drop"><span>1</span></div>
+      <div class="card-text">
+        <p class="card-title">d'alba White Truffle Spray Serum</p>
+        <p class="card-sub">#1 best seller · -32% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="2" href="https://amzn.to/4psRUQM" target="_blank" rel="noopener">
+      <div class="card-drop"><span>2</span></div>
+      <div class="card-text">
+        <p class="card-title">grace &amp; stella Eye Masks</p>
+        <p class="card-sub">Amazon's Choice · -29% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="3" href="https://amzn.to/44H7lv9" target="_blank" rel="noopener">
+      <div class="card-drop"><span>3</span></div>
+      <div class="card-text">
+        <p class="card-title">d'alba Double Serum Multi Balm</p>
+        <p class="card-sub">10K+ bought past month · -23% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="4" href="https://amzn.to/4fe2p75" target="_blank" rel="noopener">
+      <div class="card-drop"><span>4</span></div>
+      <div class="card-text">
+        <p class="card-title">Plantifique Glycolic Acid Pads</p>
+        <p class="card-sub">made in Korea · -15% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="1" href="https://amzn.to/4vELBLk" target="_blank" rel="noopener">
+      <div class="card-drop"><span>5</span></div>
+      <div class="card-text">
+        <p class="card-title">Minimalist 10% Niacinamide Serum</p>
+        <p class="card-sub">Amazon's Choice · -25% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="2" href="https://amzn.to/3Tcrzui" target="_blank" rel="noopener">
+      <div class="card-drop"><span>6</span></div>
+      <div class="card-text">
+        <p class="card-title">TOSOWOONG Niacinamide Serum</p>
+        <p class="card-sub">Amazon's Choice · -30% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <a class="card" data-tone="3" href="https://www.amazon.ca/TOSOWOONG-Niacinamide-Hyaluronic-Centella-Asiatica/dp/B0F5WCT2MW?linkCode=ll2&tag=jjrshop-20&linkId=2188b5b00bb28f3d9819160ce57bb660&ref_=as_li_ss_tl" target="_blank" rel="noopener">
+      <div class="card-drop"><span>7</span></div>
+      <div class="card-text">
+        <p class="card-title">TOSOWOONG Azelaic Acid 10% Serum</p>
+        <p class="card-sub">-34% off</p>
+      </div>
+      <span class="arrow">→</span>
+    </a>
+
+    <p class="disclosure">As an Amazon Associate I earn from qualifying purchases.</p>
+    <p class="footer">Updated weekly · new finds every Sunday</p>
+  </div>
+</body>
+</html>
